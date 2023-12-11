@@ -1,4 +1,4 @@
-import NextAuth from "next-auth/next";
+import NextAuth from "next-auth";
 import { AuthOptions } from "next-auth";
 
 import CredentialsProvider  from "next-auth/providers/credentials";
@@ -7,7 +7,7 @@ import {Business, User} from "../../../../../models/user";
 import bcrypt from 'bcryptjs';
   
 
-const authOptions: AuthOptions = {
+export const authOptions: AuthOptions = {
     providers: [
         CredentialsProvider({
             name: "Welcome Back",
