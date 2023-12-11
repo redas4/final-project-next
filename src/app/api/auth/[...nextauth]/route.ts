@@ -7,7 +7,7 @@ import {Business, User} from "../../../../../models/user";
 import bcrypt from 'bcryptjs';
   
 
-export const authOptions: AuthOptions = {
+const authOptions: AuthOptions = {
     providers: [
         CredentialsProvider({
             name: "Welcome Back",
@@ -62,3 +62,5 @@ export const authOptions: AuthOptions = {
 const handler = NextAuth(authOptions)
 
 export { handler as GET, handler as POST }
+
+
