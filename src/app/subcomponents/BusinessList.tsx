@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import { useRouter } from "next/navigation";
 interface Business {
     businessId: string;
     name: string;
@@ -20,7 +20,7 @@ export default function BusinessList({ userEmail }: BusinessListProps){
     const [reviewText, setReviewText] = useState('');
     const [error, setError] = useState('');
     const [reviewStatus, setReviewStatus] = useState('public');
-
+    const router = useRouter();
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -72,6 +72,7 @@ export default function BusinessList({ userEmail }: BusinessListProps){
             setReviewStatus('public')
             setReviewTitle('');
             setReviewText('');
+            router.refresh();
         }
 
 
