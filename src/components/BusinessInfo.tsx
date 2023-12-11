@@ -65,7 +65,7 @@ export default function BusinessInfo(){
           }
       }
       fetchType();
-      }, [session]);
+      }, [session, router]);
 
 
 

@@ -61,7 +61,7 @@ export default function UserInfo(){
             }
         }
         fetchType();
-    },[session])
+    },[session, router])
     
     const handleClick = (e: React.FormEvent) => {
         e.preventDefault()
