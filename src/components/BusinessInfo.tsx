@@ -12,9 +12,9 @@ export default function BusinessInfo(){
     const [description, setDescription] = useState('');
     const [reviews, setReviews] = useState([]);
 
+    const router = useRouter();
     const {data: session} = useSession();
 
-    const router = useRouter();
 
     useEffect(() => {
         const fetchData = async () => {

@@ -11,9 +11,8 @@ import UserReviewList from '@/app/subcomponents/UserReviewList';
 export default function UserInfo(){
     const [reviews, setReviews] = useState([]);
 
-    const {data: session} = useSession();
-
     const router = useRouter();
+    const {data: session} = useSession();
 
     useEffect(() => {
         const fetchData = async () => {
