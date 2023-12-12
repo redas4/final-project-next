@@ -13,8 +13,11 @@ export async function GET(req: NextRequest) {
       name: business.name,
       description: business.description,
     }));
+    const response = NextResponse.json({ businesses: businessesData });
 
-    return NextResponse.json({ businesses: businessesData });
+    // Set cache control headers to prevent caching
+    response.headers.set("Cache-Control", "no-store, max-age=0");
+    return response;
   } catch (error) {
     console.error("Error during fetching businesses data:", error);
     return NextResponse.json(
