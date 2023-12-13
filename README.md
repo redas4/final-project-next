@@ -54,7 +54,7 @@ An Example Review:
 
 /login - page for logging in or directing new users
 
-![list create](documentation/!(documentation/Login.png))
+![list create](documentation/Login.png)
 
 /register - page for registering new user
 
@@ -74,13 +74,10 @@ An Example Review:
 
 ![list](documentation/Review.Form.png)
 
-## Site map
-
-![a relative link](documentation/PlacesSitemap.png)
 
 ## Site map
 
-![a relative link](documentation/SiteMap.png)
+![a relative link](./documentation/SiteMap.png)
 
 ## User Stories
 1. as non-registered user, I can register a new account with the site
