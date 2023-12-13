@@ -8,14 +8,29 @@ import { redirect } from "next/navigation";
 import BusinessList from '@/app/subcomponents/BusinessList';
 import UserReviewList from '@/app/subcomponents/UserReviewList';
 
+interface Review {
+  _id: string;
+  title: string;
+  comment: string;
+  businessName: string;
+}
+
+interface Business {
+  businessId: string;
+  name: string;
+  description: string;
+}
+
+
 export default function UserInfo(){
-    const [reviews, setReviews] = useState([]);
+    const [reviews, setReviews] = useState<Review[]>([])
+    const [businesses, setBusinesses] = useState<Business[]>([]);
 
     const router = useRouter();
     const {data: session} = useSession();
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchReviewData = async () => {
             try {
               if (session?.user?.email) {
                 const res = await fetch('/api/getUserReviews', {
@@ -36,7 +51,7 @@ export default function UserInfo(){
 
           }
           };
-          fetchData();
+          fetchReviewData();
           const fetchType = async () => {
             try {
                 const res = await fetch('/api/getType', {
@@ -61,6 +76,25 @@ export default function UserInfo(){
             }
         }
         fetchType();
+        const fetchData = async () => {
+          try {
+              const res = await fetch('/api/getAllBusinesses', {
+                  method: 'GET',
+                  headers: {
+                  'Content-Type': 'application/json',
+                  },
+              });
+      
+              if (!res.ok) {
+                  throw new Error('Failed to fetch business data');
+              }
+              const data = await res.json();
+              setBusinesses(data.businesses);
+          } catch (error) {
+              console.log(error)
+          }
+      }
+      fetchData();
     },[session, router])
     
     const handleClick = (e: React.FormEvent) => {
@@ -88,7 +122,7 @@ export default function UserInfo(){
             Logout
             </button>
         </div>
-        <BusinessList userEmail={session?.user?.email || undefined}></BusinessList>
+        <BusinessList userEmail={session?.user?.email || undefined} reviews={reviews} setReviews={setReviews}  businesses={businesses} ></BusinessList>
         <h2 className="text-xl font-semibold mb-4">Reviews I wrote:</h2>
         <UserReviewList reviews={reviews || undefined} />
         </div>

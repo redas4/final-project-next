@@ -4,48 +4,37 @@ interface Business {
     businessId: string;
     name: string;
     description: string;
-    // Add any other properties if needed
   }
+
+interface Review {
+    _id: string;
+    title: string;
+    comment: string;
+    businessName: string;
+}
+
 
 interface BusinessListProps {
     userEmail: string | undefined;
+    reviews: Review[]; 
+    setReviews: React.Dispatch<React.SetStateAction<Review[]>>;
+    businesses: Business[]; 
 }
   
 
-export default function BusinessList({ userEmail }: BusinessListProps){
-    const [businesses, setBusinesses] = useState([]);
+export default function BusinessList({ userEmail, reviews, setReviews, businesses }: BusinessListProps){
     const [selectedBusinessId, setSelectedBusinessId] = useState('');
+    const [selectedBusinessName, setSelectedBusinessName] = useState('')
     const [showModal, setShowModal] = useState(false);
     const [reviewTitle, setReviewTitle] = useState('');
     const [reviewText, setReviewText] = useState('');
     const [error, setError] = useState('');
     const [reviewStatus, setReviewStatus] = useState('public');
     const router = useRouter();
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await fetch('/api/getAllBusinesses', {
-                    method: 'GET',
-                    headers: {
-                    'Content-Type': 'application/json',
-                    },
-                });
-        
-                if (!res.ok) {
-                    throw new Error('Failed to fetch business data');
-                }
-                const data = await res.json();
-                setBusinesses(data.businesses);
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        fetchData();
-    },[])
 
-
-    const handleWriteReview = (businessId: string) => {
+    const handleWriteReview = (businessId: string, businessName: string) => {
         setSelectedBusinessId(businessId);
+        setSelectedBusinessName(businessName)
         setShowModal(true);
       };
 
@@ -69,10 +58,18 @@ export default function BusinessList({ userEmail }: BusinessListProps){
             addReview();
             setShowModal(false);
             setSelectedBusinessId('');
+            setSelectedBusinessName('');
             setReviewStatus('public')
             setReviewTitle('');
             setReviewText('');
-            router.refresh();
+            const newReview: Review = {
+                _id: selectedBusinessId,
+                title: reviewTitle, 
+                comment: reviewText,
+                businessName: selectedBusinessName
+            }
+            setReviews(prevReviews => [...prevReviews, newReview]);
+            // router.refresh();
         }
 
 
@@ -81,6 +78,7 @@ export default function BusinessList({ userEmail }: BusinessListProps){
     const handleModalCancel = () => {
         setShowModal(false);
         setSelectedBusinessId('');
+        setSelectedBusinessName('');
         setReviewTitle('');
         setReviewText('');
         setReviewStatus('public')
@@ -97,7 +95,7 @@ export default function BusinessList({ userEmail }: BusinessListProps){
                     <h2 className="text-2xl font-bold mb-2">{business.name}</h2>
                     <p className="text-gray-600 mb-4">{business.description}</p>
                     <button
-                        onClick={() => handleWriteReview(business.businessId)}
+                        onClick={() => handleWriteReview(business.businessId, business.name)}
                         className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
                     >
                         Write Review
@@ -199,9 +197,6 @@ export default function BusinessList({ userEmail }: BusinessListProps){
                     </div>
                 </div>
                 )}
-
-
-
 
       </div>
     )
