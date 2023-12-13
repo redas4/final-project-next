@@ -30,6 +30,30 @@ export default function UserInfo(){
     const {data: session} = useSession();
 
     useEffect(() => {
+      const fetchType = async () => {
+        try {
+            const res = await fetch('/api/getType', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: session?.user?.email }),
+            });
+    
+            if (!res.ok) {
+                throw new Error('Failed to fetch business data');
+            }
+            const data = await res.json();
+            if(data.type === 'business') {
+              router.replace('business-home')
+            } else if(data.type === 'none'){
+              router.replace('/')
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    fetchType();
         const fetchReviewData = async () => {
             try {
               if (session?.user?.email) {
@@ -52,30 +76,7 @@ export default function UserInfo(){
           }
           };
           fetchReviewData();
-          const fetchType = async () => {
-            try {
-                const res = await fetch('/api/getType', {
-                    method: 'POST',
-                    headers: {
-                    'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ email: session?.user?.email }),
-                });
-        
-                if (!res.ok) {
-                    throw new Error('Failed to fetch business data');
-                }
-                const data = await res.json();
-                if(data.type === 'business') {
-                  router.replace('business-home')
-                } else if(data.type === 'none'){
-                  router.replace('/')
-                }
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        fetchType();
+
         const fetchData = async () => {
           try {
               const res = await fetch('/api/getAllBusinesses', {

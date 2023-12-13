@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectMongoDB } from "../../../../lib/mongodb";
 import { Business } from "../../../../models/user";
 
+export const dynamic = 'force-dynamic';
 export async function GET(req: NextRequest) {
   try {
     await connectMongoDB();
