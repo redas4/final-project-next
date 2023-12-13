@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
     const response = NextResponse.json({ businesses: businessesData });
 
     // Set cache control headers to prevent caching
-    response.headers.set("Cache-Control", "no-store, max-age=0");
+    response.headers.set("Cache-Control", "no-cache, no-store, max-age=0, must-revalidate");
     return response;
   } catch (error) {
     console.error("Error during fetching businesses data:", error);
