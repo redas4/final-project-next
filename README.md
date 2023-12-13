@@ -45,6 +45,7 @@ An Example Review:
     text: "I loved big Paul's house of Munch! Go there! The salad... The service", // th actual review
     privacy: 'public' || 'private' // to see who else can see this review
 }
+```
 
 ## [Link to Schema](models/user.ts) 
 
@@ -77,7 +78,7 @@ An Example Review:
 
 ## Site map
 
-![a relative link](./documentation/SiteMap.png)
+![a relative link](documentation/SiteMap.png)
 
 ## User Stories
 1. as non-registered user, I can register a new account with the site
