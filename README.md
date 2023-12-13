@@ -80,7 +80,7 @@ An Example Review:
 
 ## Site map
 
-![a relative link](documentation/PlacesSitemap.png)
+![a relative link](documentation/SiteMap.png)
 
 ## User Stories
 1. as non-registered user, I can register a new account with the site
